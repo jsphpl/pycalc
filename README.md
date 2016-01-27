@@ -12,10 +12,9 @@ PyCalc v.0.01
 
 AVAILABLE VALUES:
  _       references last output
- e       Euler's number
- pi      π
+ pi, e   π, Euler's number
 
-MATH METHODS:
+MATH FUNCTIONS:
 '* from math' is imported by default, for
 documentation see here:
 http://docs.python.org/2/library/math.html
@@ -23,7 +22,8 @@ http://docs.python.org/2/library/math.html
  functions() shows a list of all available
              math functions
 
-OTHER METHODS:
+OTHER FUNCTIONS:
+ cp()      - copy last value to clipboard
  vars()    - show all user-set variables
  help()    - view this text
  help(fun) - view help for a specific

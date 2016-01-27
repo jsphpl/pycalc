@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 import math
 from math import *
+import pyperclip
 
 INITIAL_VARS = [] # will later be updated in _init()
 VERSION = 0.01
 HELP_SHORT = """
 \033[1mAVAILABLE VALUES:\033[0m
  _       references last output
- e       Euler's number
- pi      π
+ pi, e   π, Euler's number
 
 \033[1mMATH FUNCTIONS:\033[0m
 '* from math' is imported by default, for
@@ -20,6 +20,7 @@ http://docs.python.org/2/library/math.html
              math functions
 
 \033[1mOTHER FUNCTIONS:\033[0m
+ cp()      - copy last value to clipboard
  vars()    - show all user-set variables
  help()    - view this text
  help(fun) - view help for a specific
@@ -53,6 +54,12 @@ def clear():
     Clear all output
     """
     print(chr(27) + "[2J")
+
+def cp():
+    """
+    Copy last output to clipboard
+    """
+    pyperclip.copy(unicode(_))
 
 def functions():
     """
