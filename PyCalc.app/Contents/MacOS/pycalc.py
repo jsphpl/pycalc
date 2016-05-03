@@ -1,17 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import math
-from math import *
 import pyperclip
 
-INITIAL_VARS = [] # will later be updated in _init()
-VERSION = 0.01
+INITIAL_VARS = None  # set the name in global scope to make it appear within itself
+VERSION = "0.2.0"
 HELP_SHORT = """
-\033[1mAVAILABLE VALUES:\033[0m
- _       references last output
- pi, e   π, Euler's number
+- \033[1mAVAILABLE VALUES\033[0m -----------------------
+ _           references last output
+ pi, e, gr   π, euler's nmbr, golden ratio
 
-\033[1mMATH FUNCTIONS:\033[0m
+- \033[1mMATH FUNCTIONS\033[0m -------------------------
 '* from math' is imported by default, for
 documentation see here:
 http://docs.python.org/2/library/math.html
@@ -19,7 +18,7 @@ http://docs.python.org/2/library/math.html
  functions() shows a list of all available
              math functions
 
-\033[1mOTHER FUNCTIONS:\033[0m
+- \033[1mOTHER FUNCTIONS\033[0m ------------------------
  cp()      - copy last value to clipboard
  vars()    - show all user-set variables
  help()    - view this text
@@ -29,7 +28,7 @@ http://docs.python.org/2/library/math.html
 Type exit() or use Ctrl-D to quit
 """
 
-class _bcolors:
+class _BCOLORS:
     """
     Used for colored terminal output
     """
@@ -42,18 +41,33 @@ class _bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+
 def _init():
     """
     Initialize PyCalc
     """
-    print('%sPyCalc v.%s%s' % (_bcolors.HEADER, VERSION, _bcolors.ENDC))
+    _init_globals()
+    clear()
+    print('%sPyCalc v.%s%s' % (_BCOLORS.HEADER, VERSION, _BCOLORS.ENDC))
     help()
+
+def _init_globals():
+    """
+    Make some functions and constants available to the user
+    """
+    # import * from math to global
+    math_module = __import__('math')
+    globals().update(math_module.__dict__)
+
+    # other constants
+    globals()['gr'] = 1.618033988749895  # The golden ratio
 
 def clear():
     """
     Clear all output
     """
     print(chr(27) + "[2J")
+
 
 def cp():
     """
@@ -67,7 +81,7 @@ def functions():
     """
     for attr_name in dir(math):
         attr = getattr(math, attr_name)
-        if hasattr(attr, '__call__'): # is a function?
+        if hasattr(attr, '__call__'):  # is a function?
             print(attr.__doc__.split('\n')[0]) # first line of __doc__
 
 def vars():
@@ -76,15 +90,16 @@ def vars():
     """
     for local, value in globals().iteritems():
         if local not in INITIAL_VARS:
-            print('%s = %s%s%s' % (local, _bcolors.OKBLUE, value, _bcolors.ENDC))
+            print('%s = %s%s%s' % (local, _BCOLORS.OKBLUE, value, _BCOLORS.ENDC))
 
 def help(method = None):
     """
     Display usage instructions.
+
     If no parameter is given, general instructions are shown.
-    If the parameter is a function, help for this function is shown.
+    If the parameter is a function, help for the given function is shown.
     """
-    if hasattr(method, '__call__'): # is a function?
+    if hasattr(method, '__call__'):  # is a function?
         if method.__doc__ is None:
             print('No documentation for %s' % method.__name__)
         else:
@@ -95,8 +110,11 @@ def help(method = None):
 
 if __name__ == '__main__':
     _init()
-    # INITIAL_VARS is used to distinguish user set variables in vars()
+
+    # INITIAL_VARS is used to distinguish user set variables in vars().
+    #
     # Setting it from globals() should be the last thing before handing over
-    # to the user
-    INITIAL_VARS = globals().keys()
-    INITIAL_VARS.append('INITIAL_VARS')
+    # to the user. All variables names added to global scope after this step
+    # will be seen as set by the user.
+    INITIAL_VARS = tuple(globals().keys())
+

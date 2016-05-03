@@ -2,7 +2,7 @@
     <key>CFBundleName</key>                      <string>PyCalc</string>
     <key>CFBundleExecutable</key>                <string>run.sh</string>
     <key>CFBundleIdentifier</key> <string>jsphpl.pycalc</string>
-    <key>CFBundleVersion</key>            <string>0.01</string>
+    <key>CFBundleVersion</key>            <string>0.2.0</string>
     <key>CFBundleGetInfoString</key>      <string>PyCalc is a python console bootstrap for use as a calculator</string>
-    <key>CFBundleShortVersionString</key> <string>0.01</string>
+    <key>CFBundleShortVersionString</key> <string>0.2.0</string>
 </dict></plist>
