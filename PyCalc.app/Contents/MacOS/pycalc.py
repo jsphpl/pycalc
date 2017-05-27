@@ -60,7 +60,7 @@ def _init_globals():
     globals().update(math_module.__dict__)
 
     # other constants
-    globals()['gr'] = 1.618033988749895  # The golden ratio
+    globals()['gr'] = (1+sqrt(5))/2  # The golden ratio
 
 def clear():
     """
@@ -117,4 +117,3 @@ if __name__ == '__main__':
     # to the user. All variables names added to global scope after this step
     # will be seen as set by the user.
     INITIAL_VARS = tuple(globals().keys())
-
